@@ -81,6 +81,17 @@ LT_OUTPUT
 
 
 dnl ***************************************************************************
+dnl Internationalization
+dnl ***************************************************************************
+
+IT_PROG_INTLTOOL([0.40.1])
+
+GETTEXT_PACKAGE="$PACKAGE-$MOBILECT_WIDGETS_API_VERSION"
+AC_SUBST(GETTEXT_PACKAGE)
+AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE,"$GETTEXT_PACKAGE", [GETTEXT package name])
+
+
+dnl ***************************************************************************
 dnl Check packages
 dnl ***************************************************************************
 
@@ -92,6 +103,7 @@ PKG_CHECK_MODULES(GTK, gtk+-3.0 >= $GTK_REQUIRED
 
 AC_CONFIG_FILES([
 Makefile
+po/Makefile.in
 ])
 
 AC_OUTPUT
