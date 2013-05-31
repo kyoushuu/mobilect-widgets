@@ -103,6 +103,7 @@ PKG_CHECK_MODULES(GTK, gtk+-3.0 >= $GTK_REQUIRED
 
 AC_CONFIG_FILES([
 Makefile
+src/Makefile
 po/Makefile.in
 ])
 
