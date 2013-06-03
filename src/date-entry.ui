@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <!-- interface-requires gtk+ 3.0 -->
+  <object class="GtkBox" id="box">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <style>
+      <class name="linked"/>
+    </style>
+    <child>
+      <object class="GtkEntry" id="entry">
+        <property name="visible">True</property>
+        <property name="can_focus">True</property>
+        <property name="events">GDK_FOCUS_CHANGE_MASK | GDK_STRUCTURE_MASK</property>
+        <signal name="focus-out-event" handler="mpcw_date_entry_on_entry_focus_out_event" swapped="no"/>
+      </object>
+      <packing>
+        <property name="expand">True</property>
+        <property name="fill">True</property>
+        <property name="position">0</property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkToggleButton" id="togglebutton">
+        <property name="visible">True</property>
+        <property name="can_focus">True</property>
+        <property name="receives_default">True</property>
+        <property name="events">GDK_FOCUS_CHANGE_MASK | GDK_STRUCTURE_MASK</property>
+        <signal name="focus-out-event" handler="mpcw_date_entry_on_togglebutton_focus_out_event" swapped="no"/>
+        <child>
+          <object class="GtkArrow" id="arrow">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="arrow_type">down</property>
+          </object>
+        </child>
+      </object>
+      <packing>
+        <property name="expand">False</property>
+        <property name="fill">True</property>
+        <property name="position">1</property>
+      </packing>
+    </child>
+  </object>
+  <object class="GtkWindow" id="popup">
+    <property name="can_focus">True</property>
+    <property name="type">popup</property>
+    <signal name="show" handler="mpcw_date_entry_on_popup_show" swapped="no"/>
+    <child>
+      <object class="GtkCalendar" id="calendar">
+        <property name="visible">True</property>
+        <property name="can_focus">True</property>
+        <signal name="day-selected-double-click" handler="mpcw_date_entry_on_calendar_day_selected_double_click" swapped="no"/>
+        <signal name="day-selected" handler="mpcw_date_entry_on_calendar_day_selected" swapped="no"/>
+      </object>
+    </child>
+  </object>
+</interface>

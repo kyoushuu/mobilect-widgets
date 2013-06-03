@@ -19,6 +19,7 @@ AM_CFLAGS = \
 lib_LTLIBRARIES = libmobilect-widgets.la
 
 libmobilect_widgets_la_SOURCES = \
+	date-entry.vala \
 	resources.c \
 	$(NULL)
 
@@ -39,6 +40,7 @@ libmobilect_widgets_la_LIBADD = \
 
 
 resources = \
+	date-entry.ui \
 	$(NULL)
 
 resources.c: mobilect-widgets.gresource.xml $(resources)
