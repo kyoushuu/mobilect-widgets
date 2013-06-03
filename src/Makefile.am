@@ -27,6 +27,8 @@ libmobilect_widgets_la_VALAFLAGS = \
 	--pkg=gtk+-3.0 \
 	--debug \
 	--library mobilect-widgets-1.0 \
+	-H mobilect-widgets.h \
+	--vapi mobilect-widgets-1.0.vapi \
 	$(NULL)
 
 libmobilect_widgets_la_LDFLAGS = \
@@ -36,6 +38,19 @@ libmobilect_widgets_la_LDFLAGS = \
 
 libmobilect_widgets_la_LIBADD = \
 	$(GTK_LIBS) \
+	$(NULL)
+
+
+mobilect_widgets_includedir = $(includedir)/mobilect-widgets-1.0
+mobilect_widgets_include_HEADERS = \
+	mobilect-widgets.h \
+	$(NULL)
+
+
+vapidir = $(datadir)/vala/vapi
+dist_vapi_DATA = \
+	mobilect-widgets-1.0.vapi \
+	mobilect-widgets-1.0.deps \
 	$(NULL)
 
 
