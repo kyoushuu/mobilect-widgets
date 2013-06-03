@@ -1,0 +1,14 @@
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+libdir=@libdir@
+datarootdir=@datarootdir@
+datadir=@datadir@
+includedir=@includedir@/mobilect-widgets-1.0
+vapidir=${datarootdir}/vala/vapi
+
+Name: Mobilect-Widgets
+Description: Widgets used in Mobilect Power Corp.'s applications
+Version: @VERSION@
+Requires: gtk+-3.0
+Libs: -L${libdir} -lmobilect-widgets
+Cflags: -I${includedir}

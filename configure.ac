@@ -112,6 +112,7 @@ AC_SUBST(GLIB_COMPILE_RESOURCES)
 AC_CONFIG_FILES([
 Makefile
 src/Makefile
+src/mobilect-widgets-1.0.pc
 po/Makefile.in
 ])
 

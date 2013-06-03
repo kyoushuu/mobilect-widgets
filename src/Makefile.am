@@ -54,6 +54,12 @@ dist_vapi_DATA = \
 	$(NULL)
 
 
+pkgconfigdir = $(libdir)/pkgconfig
+dist_pkgconfig_DATA = \
+	mobilect-widgets-1.0.pc \
+	$(NULL)
+
+
 resources = \
 	date-entry.ui \
 	$(NULL)
