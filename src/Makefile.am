@@ -19,6 +19,7 @@ AM_CFLAGS = \
 lib_LTLIBRARIES = libmobilect-widgets.la
 
 libmobilect_widgets_la_SOURCES = \
+	resources.c \
 	$(NULL)
 
 libmobilect_widgets_la_VALAFLAGS = \
@@ -34,4 +35,18 @@ libmobilect_widgets_la_LDFLAGS = \
 
 libmobilect_widgets_la_LIBADD = \
 	$(GTK_LIBS) \
+	$(NULL)
+
+
+resources = \
+	$(NULL)
+
+resources.c: mobilect-widgets.gresource.xml $(resources)
+	$(AM_V_GEN) $(GLIB_COMPILE_RESOURCES) \
+		--sourcedir=$(srcdir) --target=$@ --generate $<
+
+
+EXTRA_DIST = \
+	mobilect-widgets.gresource.xml \
+	$(resources) \
 	$(NULL)
