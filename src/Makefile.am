@@ -9,6 +9,7 @@ AM_CPPFLAGS = \
 	-DPACKAGE_LOCALE_DIR=\""$(localedir)"\" \
 	-DPACKAGE_SRC_DIR=\""$(srcdir)"\" \
 	-DPACKAGE_DATA_DIR=\""$(pkgdatadir)"\" \
+	-I$(top_srcdir)/libgd \
 	$(GTK_CFLAGS) \
 	$(NULL)
 
@@ -24,7 +25,9 @@ libmobilect_widgets_la_SOURCES = \
 	$(NULL)
 
 libmobilect_widgets_la_VALAFLAGS = \
+	--vapidir=$(top_builddir)/libgd \
 	--pkg=gtk+-3.0 \
+	--pkg=gd-1.0 \
 	--debug \
 	--library mobilect-widgets-1.0 \
 	-H mobilect-widgets.h \
@@ -38,6 +41,7 @@ libmobilect_widgets_la_LDFLAGS = \
 
 libmobilect_widgets_la_LIBADD = \
 	$(GTK_LIBS) \
+	$(top_builddir)/libgd/libgd.la \
 	$(NULL)
 
 
