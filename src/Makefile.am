@@ -22,6 +22,7 @@ lib_LTLIBRARIES = libmobilect-widgets.la
 libmobilect_widgets_la_SOURCES = \
 	date-entry.vala \
 	window.vala \
+	stack-page.vala \
 	resources.c \
 	$(NULL)
 
