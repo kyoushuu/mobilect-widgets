@@ -21,6 +21,7 @@ lib_LTLIBRARIES = libmobilect-widgets.la
 
 libmobilect_widgets_la_SOURCES = \
 	date-entry.vala \
+	window.vala \
 	resources.c \
 	$(NULL)
 
@@ -66,6 +67,7 @@ dist_pkgconfig_DATA = \
 
 resources = \
 	date-entry.ui \
+	window.ui \
 	$(NULL)
 
 resources.c: mobilect-widgets.gresource.xml $(resources)
