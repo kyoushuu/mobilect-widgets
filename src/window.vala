@@ -24,6 +24,7 @@ using Gd;
 public class Mpcw.Window : ApplicationWindow {
 
     public HeaderBar headerbar;
+    public HeaderSimpleButton button_back;
     public Stack stack;
 
     construct {
@@ -38,10 +39,23 @@ public class Mpcw.Window : ApplicationWindow {
             add (box);
 
             headerbar = builder.get_object ("headerbar") as HeaderBar;
+            button_back = builder.get_object ("button_back") as HeaderSimpleButton;
             stack = builder.get_object ("stack") as Stack;
         } catch (Error e) {
             error ("Failed to create widget: %s", e.message);
         }
+    }
+
+    [CCode (instance_pos = -1)]
+    public void on_stack_add_remove (Container container,
+                                     Widget widget) {
+        var children = stack.get_children ();
+        button_back.visible = children.length () > 1;
+    }
+
+    [CCode (instance_pos = -1)]
+    public void on_button_back_clicked (Button button) {
+        stack.pop ();
     }
 
 }

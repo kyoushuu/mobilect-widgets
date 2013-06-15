@@ -10,6 +10,17 @@
     <child>
       <object class="GdHeaderBar" id="headerbar">
         <property name="visible">True</property>
+        <child>
+          <object class="GdHeaderSimpleButton" id="button_back">
+            <property name="halign">start</property>
+            <property name="label">Back</property>
+            <property name="symbolic-icon-name">go-previous-symbolic</property>
+            <signal name="clicked" handler="mpcw_window_on_button_back_clicked" swapped="no"/>
+          </object>
+          <packing>
+            <property name="pack_type">start</property>
+          </packing>
+        </child>
       </object>
     </child>
     <child>
@@ -17,6 +28,8 @@
         <property name="visible">True</property>
         <property name="hexpand">True</property>
         <property name="vexpand">True</property>
+        <signal name="add" handler="mpcw_window_on_stack_add_remove" swapped="no"/>
+        <signal name="remove" handler="mpcw_window_on_stack_add_remove" swapped="no"/>
       </object>
       <packing>
         <property name="expand">False</property>
