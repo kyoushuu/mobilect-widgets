@@ -23,12 +23,14 @@ using Gd;
 
 public class Mpcw.StackPage : Bin {
 
+    public Stack stack { public get; internal set; }
+
     public virtual signal void closed () {
     }
 
     public virtual void close () {
         closed ();
-        destroy ();
+        stack.remove (this);
     }
 
 }

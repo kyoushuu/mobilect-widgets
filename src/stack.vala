@@ -24,6 +24,7 @@ using Gd;
 public class Mpcw.Stack : Gd.Stack {
 
     public void push (StackPage page) {
+        page.stack = this;
         add (page);
         set_visible_child (page);
     }
