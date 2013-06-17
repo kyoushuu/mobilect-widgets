@@ -40,7 +40,9 @@ public class Mpcw.Window : ApplicationWindow {
 
             headerbar = builder.get_object ("headerbar") as HeaderBar;
             button_back = builder.get_object ("button_back") as HeaderSimpleButton;
+
             stack = builder.get_object ("stack") as Stack;
+            stack.headerbar = headerbar;
         } catch (Error e) {
             error ("Failed to create widget: %s", e.message);
         }

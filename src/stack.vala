@@ -23,6 +23,8 @@ using Gd;
 
 public class Mpcw.Stack : Gd.Stack {
 
+    public HeaderBar headerbar { public get; internal set; }
+
     public void push (StackPage page) {
         page.stack = this;
         add (page);
