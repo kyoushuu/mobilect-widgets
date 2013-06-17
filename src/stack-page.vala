@@ -28,6 +28,12 @@ public class Mpcw.StackPage : Bin {
     public virtual signal void added () {
     }
 
+    public virtual signal void shown () {
+    }
+
+    public virtual signal void hidden () {
+    }
+
     public virtual signal void closed () {
     }
 

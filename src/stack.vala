@@ -25,6 +25,20 @@ public class Mpcw.Stack : Gd.Stack {
 
     public HeaderBar headerbar { public get; internal set; }
 
+    private weak StackPage current_page;
+
+    construct {
+      notify["visible-child"].connect (() => {
+          if (current_page != null) {
+              current_page.hidden ();
+          }
+          if (visible_child != null) {
+              current_page = visible_child as StackPage;
+              current_page.shown ();
+          }
+      });
+    }
+
     public void push (StackPage page) {
         page.stack = this;
         add (page);
