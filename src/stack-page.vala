@@ -25,6 +25,9 @@ public class Mpcw.StackPage : Bin {
 
     public Stack stack { public get; internal set; }
 
+    public virtual signal void added () {
+    }
+
     public virtual signal void closed () {
     }
 
