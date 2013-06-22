@@ -23,6 +23,9 @@ using Gd;
 
 public class Mpcw.View : StackPage {
 
+    public SelectionMode selection_mode { public get; public set; }
+    public bool selection_mode_enabled { public get; public set; }
+
     private HeaderSimpleButton button_new;
 
     public virtual signal void new_activated () {
@@ -35,6 +38,10 @@ public class Mpcw.View : StackPage {
             builder.connect_signals (this);
 
             button_new = builder.get_object ("button_new") as HeaderSimpleButton;
+
+            /* Hide/show new button when selection mode is enabled */
+            bind_property ("selection-mode-enabled", button_new, "visible",
+                           BindingFlags.SYNC_CREATE | BindingFlags.INVERT_BOOLEAN);
         } catch (Error e) {
             error ("Failed to create widget: %s", e.message);
         }
