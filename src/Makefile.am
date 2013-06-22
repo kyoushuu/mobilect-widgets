@@ -24,6 +24,7 @@ libmobilect_widgets_la_SOURCES = \
 	window.vala \
 	stack.vala \
 	stack-page.vala \
+	view.vala \
 	resources.c \
 	$(NULL)
 
