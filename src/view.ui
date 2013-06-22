@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <!-- interface-requires gtk+ 3.8 -->
+  <object class="GdHeaderSimpleButton" id="button_new">
+    <property name="visible">True</property>
+    <property name="halign">start</property>
+    <property name="label">New</property>
+    <signal name="clicked" handler="mpcw_view_on_button_new_clicked" swapped="no"/>
+  </object>
+</interface>

@@ -3,5 +3,6 @@
   <gresource prefix="/com/mobilectpower/widgets">
     <file preprocess="xml-stripblanks">date-entry.ui</file>
     <file preprocess="xml-stripblanks">window.ui</file>
+    <file preprocess="xml-stripblanks">view.ui</file>
   </gresource>
 </gresources>

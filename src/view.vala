@@ -23,4 +23,48 @@ using Gd;
 
 public class Mpcw.View : StackPage {
 
+    private HeaderSimpleButton button_new;
+
+    public virtual signal void new_activated () {
+    }
+
+    construct {
+        try {
+            var builder = new Builder ();
+            builder.add_from_resource ("/com/mobilectpower/widgets/view.ui");
+            builder.connect_signals (this);
+
+            button_new = builder.get_object ("button_new") as HeaderSimpleButton;
+        } catch (Error e) {
+            error ("Failed to create widget: %s", e.message);
+        }
+    }
+
+    public override void added () {
+        base.added ();
+        if (stack.headerbar != null) {
+            stack.headerbar.pack_start (button_new);
+        }
+    }
+
+    public override void shown () {
+        base.shown ();
+        button_new.show ();
+    }
+
+    public override void hidden () {
+        base.hidden ();
+        button_new.hide ();
+    }
+
+    public override void closed () {
+        base.closed ();
+        button_new.destroy ();
+    }
+
+    [CCode (instance_pos = -1)]
+    public void on_button_new_clicked (Button button) {
+        new_activated ();
+    }
+
 }
