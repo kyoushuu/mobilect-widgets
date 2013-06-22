@@ -7,4 +7,26 @@
     <property name="label">New</property>
     <signal name="clicked" handler="mpcw_view_on_button_new_clicked" swapped="no"/>
   </object>
+  <object class="GtkBox" id="box_select">
+    <property name="visible">True</property>
+    <child>
+      <object class="GdHeaderToggleButton" id="togglebutton_select">
+        <property name="visible">True</property>
+        <property name="halign">end</property>
+        <property name="label">Select Items</property>
+        <property name="symbolic-icon-name">object-select-symbolic</property>
+        <signal name="toggled" handler="mpcw_view_on_togglebutton_select_toggled" swapped="no"/>
+      </object>
+    </child>
+    <child>
+      <object class="GdHeaderToggleButton" id="togglebutton_done">
+        <property name="visible">True</property>
+        <property name="halign">end</property>
+        <property name="label">Done</property>
+        <style>
+          <class name="suggested-action"/>
+        </style>
+      </object>
+    </child>
+  </object>
 </interface>

@@ -27,6 +27,9 @@ public class Mpcw.View : StackPage {
     public bool selection_mode_enabled { public get; public set; }
 
     private HeaderSimpleButton button_new;
+    private HeaderToggleButton togglebutton_select;
+    private HeaderToggleButton togglebutton_done;
+    private Box box_select;
 
     public virtual signal void new_activated () {
     }
@@ -38,10 +41,27 @@ public class Mpcw.View : StackPage {
             builder.connect_signals (this);
 
             button_new = builder.get_object ("button_new") as HeaderSimpleButton;
+            togglebutton_select = builder.get_object ("togglebutton_select") as HeaderToggleButton;
+            togglebutton_done = builder.get_object ("togglebutton_done") as HeaderToggleButton;
+            box_select = builder.get_object ("box_select") as Box;
 
             /* Hide/show new button when selection mode is enabled */
             bind_property ("selection-mode-enabled", button_new, "visible",
                            BindingFlags.SYNC_CREATE | BindingFlags.INVERT_BOOLEAN);
+
+            /* Update selection mode when select button is toggled */
+            togglebutton_select.bind_property ("active", this, "selection-mode-enabled",
+                                               BindingFlags.SYNC_CREATE);
+
+            /* Either select or done button is active */
+            togglebutton_select.bind_property ("active", togglebutton_done, "active",
+                                               BindingFlags.BIDIRECTIONAL | BindingFlags.SYNC_CREATE | BindingFlags.INVERT_BOOLEAN);
+
+            /* Hide select and done buttons if they are active */
+            togglebutton_select.bind_property ("active", togglebutton_select, "visible",
+                                               BindingFlags.SYNC_CREATE | BindingFlags.INVERT_BOOLEAN);
+            togglebutton_done.bind_property ("active", togglebutton_done, "visible",
+                                             BindingFlags.SYNC_CREATE | BindingFlags.INVERT_BOOLEAN);
         } catch (Error e) {
             error ("Failed to create widget: %s", e.message);
         }
@@ -51,27 +71,40 @@ public class Mpcw.View : StackPage {
         base.added ();
         if (stack.headerbar != null) {
             stack.headerbar.pack_start (button_new);
+            stack.headerbar.pack_end (box_select);
         }
     }
 
     public override void shown () {
         base.shown ();
         button_new.show ();
+        box_select.show ();
     }
 
     public override void hidden () {
         base.hidden ();
         button_new.hide ();
+        box_select.hide ();
     }
 
     public override void closed () {
         base.closed ();
         button_new.destroy ();
+        box_select.destroy ();
     }
 
     [CCode (instance_pos = -1)]
     public void on_button_new_clicked (Button button) {
         new_activated ();
+    }
+
+    [CCode (instance_pos = -1)]
+    public void on_togglebutton_select_toggled (ToggleButton button) {
+        if (togglebutton_select.active) {
+            stack.headerbar.get_style_context ().add_class ("selection-mode");
+        } else {
+            stack.headerbar.get_style_context ().remove_class ("selection-mode");
+        }
     }
 
 }
