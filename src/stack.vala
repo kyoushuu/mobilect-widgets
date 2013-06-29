@@ -49,6 +49,10 @@ public class Mpcw.Stack : Gd.Stack {
     public void pop () {
         var children = get_children ();
         if (children.length () > 1) {
+            var new_page = children.last ().prev.data as StackPage;
+            var handler = (children.last ().data as StackPage).closed.connect ((page) => {
+                set_visible_child (new_page);
+            });
             (children.last ().data as StackPage).close ();
         }
     }
