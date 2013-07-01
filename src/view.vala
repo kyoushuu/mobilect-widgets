@@ -91,6 +91,7 @@ public class Mpcw.View : StackPage {
         base.closed ();
         button_new.destroy ();
         box_select.destroy ();
+        stack.headerbar.get_style_context ().remove_class ("selection-mode");
     }
 
     [CCode (instance_pos = -1)]
