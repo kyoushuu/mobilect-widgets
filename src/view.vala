@@ -23,8 +23,44 @@ using Gd;
 
 public class Mpcw.View : StackPage {
 
+    public enum ModelColumns {
+        SELECTED,
+        VISIBLE,
+        NUM
+    }
+
     public SelectionMode selection_mode { public get; public set; }
     public bool selection_mode_enabled { public get; public set; }
+    public int selected_items_num { public get; private set; }
+
+    private ListStore? _list;
+    public ListStore? list {
+        get {
+            return _list;
+        }
+        set {
+            if (value != null) {
+                _list = value;
+                filter = new TreeModelFilter (value, null);
+
+                sort = new TreeModelSort.with_model (filter);
+                treeview.model = sort;
+            } else {
+                _list = null;
+                filter = null;
+                sort = null;
+                treeview.model = null;
+            }
+
+            selected_items_num = 0;
+        }
+    }
+
+    public Overlay overlay;
+    public TreeView treeview;
+    public TreeViewColumn treeviewcolumn_selected;
+    public TreeModelFilter filter;
+    public TreeModelSort sort;
 
     private HeaderSimpleButton button_new;
     private HeaderToggleButton togglebutton_select;
@@ -34,11 +70,21 @@ public class Mpcw.View : StackPage {
     public virtual signal void new_activated () {
     }
 
+    public virtual signal void item_activated (TreeIter iter) {
+    }
+
     construct {
         try {
             var builder = new Builder ();
             builder.add_from_resource ("/com/mobilectpower/widgets/view.ui");
             builder.connect_signals (this);
+
+            var box = builder.get_object ("box") as Box;
+            add (box);
+
+            overlay = builder.get_object ("overlay") as Overlay;
+            treeview = builder.get_object ("treeview") as TreeView;
+            treeviewcolumn_selected = builder.get_object ("treeviewcolumn_selected") as TreeViewColumn;
 
             button_new = builder.get_object ("button_new") as HeaderSimpleButton;
             togglebutton_select = builder.get_object ("togglebutton_select") as HeaderToggleButton;
@@ -62,6 +108,17 @@ public class Mpcw.View : StackPage {
                                                BindingFlags.SYNC_CREATE | BindingFlags.INVERT_BOOLEAN);
             togglebutton_done.bind_property ("active", togglebutton_done, "visible",
                                              BindingFlags.SYNC_CREATE | BindingFlags.INVERT_BOOLEAN);
+
+            /* Clear selection when selection mode is disabled */
+            notify["selection-mode-enabled"].connect (() => {
+                if (!selection_mode_enabled) {
+                    select_none ();
+                }
+            });
+
+            /* Show select column if select is active */
+            bind_property ("selection-mode-enabled", treeviewcolumn_selected, "visible",
+                           BindingFlags.SYNC_CREATE);
         } catch (Error e) {
             error ("Failed to create widget: %s", e.message);
         }
@@ -94,6 +151,34 @@ public class Mpcw.View : StackPage {
         stack.headerbar.get_style_context ().remove_class ("selection-mode");
     }
 
+    public TreeIter[] get_selected_iters (bool selected = true) {
+        var iters = new TreeIter[0];
+
+        list.foreach ((model, path, iter) => {
+            bool is_selected;
+
+            list.get (iter, ModelColumns.SELECTED, out is_selected);
+
+            if (selected == is_selected) {
+                iters += iter;
+            }
+
+            return false;
+        });
+
+        return iters;
+    }
+
+    public void select_none () {
+        if (list == null)
+            return;
+
+        foreach (var iter in get_selected_iters ()) {
+            list.set (iter, ModelColumns.SELECTED, false);
+            selected_items_num--;
+        }
+    }
+
     [CCode (instance_pos = -1)]
     public void on_button_new_clicked (Button button) {
         new_activated ();
@@ -105,6 +190,34 @@ public class Mpcw.View : StackPage {
             stack.headerbar.get_style_context ().add_class ("selection-mode");
         } else {
             stack.headerbar.get_style_context ().remove_class ("selection-mode");
+        }
+    }
+
+    [CCode (instance_pos = -1)]
+    public void on_treeview_row_activated (TreeView tree_view,
+                                           TreePath path,
+                                           TreeViewColumn column) {
+        TreeIter sort_iter, filter_iter, iter;
+
+        if (sort.get_iter (out sort_iter, path)) {
+            sort.convert_iter_to_child_iter (out filter_iter, sort_iter);
+            filter.convert_iter_to_child_iter (out iter, filter_iter);
+
+            if (selection_mode_enabled) {
+                bool selected;
+                list.get (iter, ModelColumns.SELECTED, out selected);
+
+                if (selected) {
+                    selected_items_num--;
+                } else {
+                    selected_items_num++;
+                }
+
+                selected = !selected;
+                list.set (iter, ModelColumns.SELECTED, selected);
+            } else {
+                item_activated (iter);
+            }
         }
     }
 
