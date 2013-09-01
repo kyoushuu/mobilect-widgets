@@ -59,6 +59,9 @@ public class Mpcw.View : StackPage {
     public Overlay overlay;
     public TreeView treeview;
     public TreeViewColumn treeviewcolumn_selected;
+    public Revealer revealer_selection;
+    public HeaderBar toolbar_selection;
+
     public TreeModelFilter filter;
     public TreeModelSort sort;
 
@@ -75,6 +78,8 @@ public class Mpcw.View : StackPage {
 
     construct {
         try {
+            Gd.ensure_types ();
+
             var builder = new Builder ();
             builder.add_from_resource ("/com/mobilectpower/widgets/view.ui");
             builder.connect_signals (this);
@@ -85,6 +90,8 @@ public class Mpcw.View : StackPage {
             overlay = builder.get_object ("overlay") as Overlay;
             treeview = builder.get_object ("treeview") as TreeView;
             treeviewcolumn_selected = builder.get_object ("treeviewcolumn_selected") as TreeViewColumn;
+            revealer_selection = builder.get_object ("revealer_selection") as Revealer;
+            toolbar_selection = builder.get_object ("toolbar_selection") as HeaderBar;
 
             button_new = builder.get_object ("button_new") as HeaderSimpleButton;
             togglebutton_select = builder.get_object ("togglebutton_select") as HeaderToggleButton;
@@ -94,6 +101,10 @@ public class Mpcw.View : StackPage {
             /* Hide/show new button when selection mode is enabled */
             bind_property ("selection-mode-enabled", button_new, "visible",
                            BindingFlags.SYNC_CREATE | BindingFlags.INVERT_BOOLEAN);
+
+            /* Reveal selection toolbar when selection mode is enabled */
+            bind_property ("selection-mode-enabled", revealer_selection, "reveal-child",
+                           BindingFlags.SYNC_CREATE);
 
             /* Update selection mode when select button is toggled */
             togglebutton_select.bind_property ("active", this, "selection-mode-enabled",
