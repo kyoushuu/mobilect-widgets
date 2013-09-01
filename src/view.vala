@@ -64,7 +64,7 @@ public class Mpcw.View : StackPage {
 
     private HeaderSimpleButton button_new;
     private HeaderToggleButton togglebutton_select;
-    private HeaderToggleButton togglebutton_done;
+    private HeaderToggleButton togglebutton_cancel;
     private Box box_select;
 
     public virtual signal void new_activated () {
@@ -88,7 +88,7 @@ public class Mpcw.View : StackPage {
 
             button_new = builder.get_object ("button_new") as HeaderSimpleButton;
             togglebutton_select = builder.get_object ("togglebutton_select") as HeaderToggleButton;
-            togglebutton_done = builder.get_object ("togglebutton_done") as HeaderToggleButton;
+            togglebutton_cancel = builder.get_object ("togglebutton_cancel") as HeaderToggleButton;
             box_select = builder.get_object ("box_select") as Box;
 
             /* Hide/show new button when selection mode is enabled */
@@ -99,15 +99,16 @@ public class Mpcw.View : StackPage {
             togglebutton_select.bind_property ("active", this, "selection-mode-enabled",
                                                BindingFlags.SYNC_CREATE);
 
-            /* Either select or done button is active */
-            togglebutton_select.bind_property ("active", togglebutton_done, "active",
-                                               BindingFlags.BIDIRECTIONAL | BindingFlags.SYNC_CREATE | BindingFlags.INVERT_BOOLEAN);
+            /* Either select or cancel button is active */
+            togglebutton_select.bind_property ("active", togglebutton_cancel, "active",
+                                               BindingFlags.SYNC_CREATE | BindingFlags.INVERT_BOOLEAN |
+                                               BindingFlags.BIDIRECTIONAL);
 
-            /* Hide select and done buttons if they are active */
+            /* Hide select and cancel buttons if they are active */
             togglebutton_select.bind_property ("active", togglebutton_select, "visible",
                                                BindingFlags.SYNC_CREATE | BindingFlags.INVERT_BOOLEAN);
-            togglebutton_done.bind_property ("active", togglebutton_done, "visible",
-                                             BindingFlags.SYNC_CREATE | BindingFlags.INVERT_BOOLEAN);
+            togglebutton_cancel.bind_property ("active", togglebutton_cancel, "visible",
+                                               BindingFlags.SYNC_CREATE | BindingFlags.INVERT_BOOLEAN);
 
             /* Clear selection when selection mode is disabled */
             notify["selection-mode-enabled"].connect (() => {
