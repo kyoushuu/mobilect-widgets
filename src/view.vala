@@ -108,7 +108,7 @@ public class Mpcw.View : StackPage {
 
             /* Update selection mode when select button is toggled */
             togglebutton_select.bind_property ("active", this, "selection-mode-enabled",
-                                               BindingFlags.SYNC_CREATE);
+                                               BindingFlags.SYNC_CREATE | BindingFlags.BIDIRECTIONAL);
 
             /* Either select or cancel button is active */
             togglebutton_select.bind_property ("active", togglebutton_cancel, "active",
