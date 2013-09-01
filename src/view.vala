@@ -66,11 +66,17 @@ public class Mpcw.View : StackPage {
     public TreeModelSort sort;
 
     private HeaderSimpleButton button_new;
+    private HeaderSimpleButton button_delete;
     private HeaderToggleButton togglebutton_select;
     private HeaderToggleButton togglebutton_cancel;
     private Box box_select;
 
     public virtual signal void new_activated () {
+    }
+
+    public virtual signal void delete_activated () {
+        remove_selected ();
+        selection_mode_enabled = false;
     }
 
     public virtual signal void item_activated (TreeIter iter) {
@@ -94,6 +100,7 @@ public class Mpcw.View : StackPage {
             toolbar_selection = builder.get_object ("toolbar_selection") as HeaderBar;
 
             button_new = builder.get_object ("button_new") as HeaderSimpleButton;
+            button_delete = builder.get_object ("button_delete") as HeaderSimpleButton;
             togglebutton_select = builder.get_object ("togglebutton_select") as HeaderToggleButton;
             togglebutton_cancel = builder.get_object ("togglebutton_cancel") as HeaderToggleButton;
             box_select = builder.get_object ("box_select") as Box;
@@ -101,6 +108,10 @@ public class Mpcw.View : StackPage {
             /* Hide/show new button when selection mode is enabled */
             bind_property ("selection-mode-enabled", button_new, "visible",
                            BindingFlags.SYNC_CREATE | BindingFlags.INVERT_BOOLEAN);
+
+            /* Delete button is sensitive if there is a selected item */
+            bind_property ("selected-items-num", button_delete, "sensitive",
+                           BindingFlags.SYNC_CREATE);
 
             /* Reveal selection toolbar when selection mode is enabled */
             bind_property ("selection-mode-enabled", revealer_selection, "reveal-child",
@@ -191,9 +202,24 @@ public class Mpcw.View : StackPage {
         }
     }
 
+    public void remove_selected () {
+        if (list == null)
+            return;
+
+        foreach (var iter in get_selected_iters ()) {
+            list.remove (iter);
+            selected_items_num--;
+        }
+    }
+
     [CCode (instance_pos = -1)]
     public void on_button_new_clicked (Button button) {
         new_activated ();
+    }
+
+    [CCode (instance_pos = -1)]
+    public void on_button_delete_clicked (Button button) {
+        delete_activated ();
     }
 
     [CCode (instance_pos = -1)]
