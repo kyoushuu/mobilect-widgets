@@ -25,6 +25,8 @@ libmobilect_widgets_la_SOURCES = \
 	stack.vala \
 	stack-page.vala \
 	view.vala \
+	notification.vala \
+	notification-item.vala \
 	resources.c \
 	$(NULL)
 
@@ -72,6 +74,7 @@ resources = \
 	date-entry.ui \
 	window.ui \
 	view.ui \
+	notification-item.ui \
 	$(NULL)
 
 resources.c: mobilect-widgets.gresource.xml $(resources)

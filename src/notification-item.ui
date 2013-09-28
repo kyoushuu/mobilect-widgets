@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <!-- interface-requires gtk+ 3.6 -->
+  <object class="GtkBox" id="box">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <child>
+      <object class="GtkGrid" id="grid_labels">
+        <property name="visible">True</property>
+        <property name="can_focus">True</property>
+        <property name="orientation">vertical</property>
+        <child>
+          <object class="GtkLabel" id="label_primary">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="label">Primary Label</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkLabel" id="label_secondary">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="label">Secondary Label</property>
+            <style>
+              <class name="dim-label"/>
+            </style>
+          </object>
+        </child>
+      </object>
+    </child>
+    <child>
+      <object class="GtkGrid" id="grid_buttons">
+        <property name="visible">True</property>
+        <property name="can_focus">True</property>
+        <property name="orientation">horizontal</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkButton" id="button_close">
+        <property name="visible">True</property>
+        <property name="can_focus">True</property>
+        <property name="valign">center</property>
+        <signal name="clicked" handler="mpcw_notification_item_on_button_close_clicked" swapped="no"/>
+        <child>
+          <object class="GtkImage" id="image_button_close">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="icon_name">window-close-symbolic</property>
+            <property name="pixel_size">16</property>
+            <property name="margin_top">2</property>
+            <property name="margin_bottom">2</property>
+          </object>
+        </child>
+      </object>
+    </child>
+  </object>
+</interface>

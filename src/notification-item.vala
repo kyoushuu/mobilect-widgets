@@ -21,52 +21,30 @@
 using Gtk;
 using Gd;
 
-public class Mpcw.Window : ApplicationWindow {
+public class Mpcw.NotificationItem : Box {
 
-    public HeaderBar headerbar;
-    public HeaderSimpleButton button_back;
-    public Stack stack;
-    public Notification notification;
+    private Label label_primary;
 
     construct {
         try {
             Gd.ensure_types ();
 
             var builder = new Builder ();
-            builder.add_from_resource ("/com/mobilectpower/widgets/window.ui");
+            builder.add_from_resource ("/com/mobilectpower/widgets/notification-item.ui");
             builder.connect_signals (this);
 
             var box = builder.get_object ("box") as Box;
             add (box);
 
-            headerbar = builder.get_object ("headerbar") as HeaderBar;
-            button_back = builder.get_object ("button_back") as HeaderSimpleButton;
-
-            stack = builder.get_object ("stack") as Stack;
-            stack.headerbar = headerbar;
-
-            notification = builder.get_object ("notification") as Notification;
-            notification.add.connect (() => {
-                notification.show ();
-            });
-            notification.remove.connect (() => {
-                notification.dismiss ();
-            });
+            label_primary = builder.get_object ("label_primary") as Label;
         } catch (Error e) {
             error ("Failed to create widget: %s", e.message);
         }
     }
 
     [CCode (instance_pos = -1)]
-    public void on_stack_add_remove (Container container,
-                                     Widget widget) {
-        var children = stack.get_children ();
-        button_back.visible = children.length () > 1;
-    }
-
-    [CCode (instance_pos = -1)]
-    public void on_button_back_clicked (Button button) {
-        stack.pop ();
+    public void on_button_close_clicked (Button button) {
+        parent.remove (this);
     }
 
 }
