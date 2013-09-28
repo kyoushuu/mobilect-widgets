@@ -56,7 +56,6 @@ public class Mpcw.View : StackPage {
         }
     }
 
-    public Overlay overlay;
     public TreeView treeview;
     public TreeViewColumn treeviewcolumn_selected;
     public Revealer revealer_selection;
@@ -92,8 +91,6 @@ public class Mpcw.View : StackPage {
 
             var box = builder.get_object ("box") as Box;
             add (box);
-
-            overlay = builder.get_object ("overlay") as Overlay;
             treeview = builder.get_object ("treeview") as TreeView;
             treeviewcolumn_selected = builder.get_object ("treeviewcolumn_selected") as TreeViewColumn;
             revealer_selection = builder.get_object ("revealer_selection") as Revealer;
