@@ -24,12 +24,18 @@
       </object>
     </child>
     <child>
-      <object class="MpcwStack" id="stack">
+      <object class="GtkOverlay" id="overlay">
         <property name="visible">True</property>
-        <property name="hexpand">True</property>
-        <property name="vexpand">True</property>
-        <signal name="add" handler="mpcw_window_on_stack_add_remove" swapped="no"/>
-        <signal name="remove" handler="mpcw_window_on_stack_add_remove" swapped="no"/>
+        <property name="can_focus">False</property>
+        <child>
+          <object class="MpcwStack" id="stack">
+            <property name="visible">True</property>
+            <property name="hexpand">True</property>
+            <property name="vexpand">True</property>
+            <signal name="add" handler="mpcw_window_on_stack_add_remove" swapped="no"/>
+            <signal name="remove" handler="mpcw_window_on_stack_add_remove" swapped="no"/>
+          </object>
+        </child>
       </object>
       <packing>
         <property name="expand">False</property>
