@@ -189,6 +189,16 @@ public class Mpcw.View : StackPage {
         return iters;
     }
 
+    public void select_all () {
+        if (list == null)
+            return;
+
+        foreach (var iter in get_selected_iters (false)) {
+            list.set (iter, ModelColumns.SELECTED, true);
+            selected_items_num++;
+        }
+    }
+
     public void select_none () {
         if (list == null)
             return;
