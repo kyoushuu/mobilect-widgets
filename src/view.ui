@@ -26,6 +26,69 @@
       </object>
     </child>
   </object>
+  <object class="GtkMenu" id="menu_selection">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <child>
+      <object class="GtkMenuItem" id="menuitem_selectall">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="label" translatable="yes">Select All</property>
+        <property name="use_underline">True</property>
+        <signal name="activate" handler="mpcw_view_on_menuitem_selectall_activate" swapped="no"/>
+      </object>
+    </child>
+    <child>
+      <object class="GtkMenuItem" id="menuitem_selectnone">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="label" translatable="yes">Select None</property>
+        <property name="use_underline">True</property>
+        <signal name="activate" handler="mpcw_view_on_menuitem_selectnone_activate" swapped="no"/>
+      </object>
+    </child>
+  </object>
+  <object class="GtkMenuButton" id="menubutton_selection">
+    <property name="popup">menu_selection</property>
+    <property name="visible">True</property>
+    <property name="can-focus">True</property>
+    <property name="relief">none</property>
+    <property name="can-focus">False</property>
+    <child>
+      <object class="GtkBox" id="box_selection">
+        <property name="visible">True</property>
+        <property name="can-focus">False</property>
+        <property name="orientation">horizontal</property>
+        <property name="spacing">6</property>
+        <child>
+          <object class="GtkLabel" id="label_selection">
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="label" translatable="yes">Click on items to select them</property>
+          </object>
+          <packing>
+            <property name="pack-type">start</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkArrow" id="arrow_selection">
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="arrow-type">down</property>
+            <property name="shadow-type">none</property>
+          </object>
+          <packing>
+            <property name="pack-type">start</property>
+            <property name="position">1</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+    <style>
+      <class name="selection-menu"/>
+    </style>
+  </object>
   <object class="GtkBox" id="box">
     <property name="visible">True</property>
     <property name="can_focus">False</property>

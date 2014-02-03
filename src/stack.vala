@@ -52,6 +52,7 @@ public class Mpcw.Stack : Gd.Stack {
             var new_page = children.last ().prev.data as StackPage;
             var old_page = children.last ().data as StackPage;
             old_page.closed.connect ((page) => {
+                headerbar.set_custom_title (null);
                 set_visible_child (new_page);
             });
             old_page.close ();

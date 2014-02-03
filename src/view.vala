@@ -69,6 +69,7 @@ public class Mpcw.View : StackPage {
     private HeaderToggleButton togglebutton_select;
     private HeaderToggleButton togglebutton_cancel;
     private Box box_select;
+    private MenuButton menubutton_selection;
 
     public virtual signal void new_activated () {
     }
@@ -101,6 +102,7 @@ public class Mpcw.View : StackPage {
             togglebutton_select = builder.get_object ("togglebutton_select") as HeaderToggleButton;
             togglebutton_cancel = builder.get_object ("togglebutton_cancel") as HeaderToggleButton;
             box_select = builder.get_object ("box_select") as Box;
+            menubutton_selection = builder.get_object ("menubutton_selection") as MenuButton;
 
             /* Hide/show new button when selection mode is enabled */
             bind_property ("selection-mode-enabled", button_new, "visible",
@@ -131,8 +133,15 @@ public class Mpcw.View : StackPage {
 
             /* Clear selection when selection mode is disabled */
             notify["selection-mode-enabled"].connect (() => {
+                if (stack == null) {
+                    return;
+                }
+
                 if (!selection_mode_enabled) {
                     select_none ();
+                    stack.headerbar.set_custom_title (null);
+                } else {
+                    stack.headerbar.set_custom_title (menubutton_selection);
                 }
             });
 
@@ -264,6 +273,16 @@ public class Mpcw.View : StackPage {
                 item_activated (iter);
             }
         }
+    }
+
+    [CCode (instance_pos = -1)]
+    public void on_menuitem_selectall_activate (Gtk.MenuItem menuitem) {
+        select_all ();
+    }
+
+    [CCode (instance_pos = -1)]
+    public void on_menuitem_selectnone_activate (Gtk.MenuItem menuitem) {
+        select_none ();
     }
 
 }
