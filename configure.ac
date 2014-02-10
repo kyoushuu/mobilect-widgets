@@ -100,7 +100,7 @@ GTK_REQUIRED=3.0.0
 PKG_CHECK_MODULES(GTK, gtk+-3.0 >= $GTK_REQUIRED
                        gdk-3.0 >= $GTK_REQUIRED)
 
-LIBGD_INIT([header-bar notification revealer stack static tagged-entry vapi])
+LIBGD_INIT([header-bar notification revealer stack static tagged-entry])
 
 
 dnl ***************************************************************************
@@ -114,6 +114,7 @@ AC_SUBST(GLIB_COMPILE_RESOURCES)
 AC_CONFIG_FILES([
 Makefile
 libgd/Makefile
+vapi/Makefile
 src/Makefile
 src/mobilect-widgets-1.0.pc
 po/Makefile.in

@@ -29,7 +29,7 @@ libmobilect_widgets_la_SOURCES = \
 	$(NULL)
 
 libmobilect_widgets_la_VALAFLAGS = \
-	--vapidir=$(top_builddir)/libgd \
+	--vapidir=$(top_builddir)/vapi \
 	--pkg=gtk+-3.0 \
 	--pkg=gd-1.0 \
 	--debug \
