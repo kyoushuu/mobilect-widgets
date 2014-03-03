@@ -19,18 +19,15 @@
  */
 
 using Gtk;
-using Gd;
 
 public class Mpcw.Window : ApplicationWindow {
 
     public HeaderBar headerbar;
-    public HeaderSimpleButton button_back;
+    public Button button_back;
     public Stack stack;
 
     construct {
         try {
-            Gd.ensure_types ();
-
             var builder = new Builder ();
             builder.add_from_resource ("/com/mobilectpower/widgets/window.ui");
             builder.connect_signals (this);
@@ -39,10 +36,12 @@ public class Mpcw.Window : ApplicationWindow {
             add (box);
 
             headerbar = builder.get_object ("headerbar") as HeaderBar;
-            button_back = builder.get_object ("button_back") as HeaderSimpleButton;
+            button_back = builder.get_object ("button_back") as Button;
 
             stack = builder.get_object ("stack") as Stack;
             stack.headerbar = headerbar;
+
+            set_titlebar (headerbar);
         } catch (Error e) {
             error ("Failed to create widget: %s", e.message);
         }

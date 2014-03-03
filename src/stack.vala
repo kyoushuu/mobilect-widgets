@@ -19,9 +19,8 @@
  */
 
 using Gtk;
-using Gd;
 
-public class Mpcw.Stack : Gd.Stack {
+public class Mpcw.Stack : Gtk.Stack {
 
     public HeaderBar headerbar { public get; internal set; }
 

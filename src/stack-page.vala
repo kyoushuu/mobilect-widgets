@@ -19,7 +19,6 @@
  */
 
 using Gtk;
-using Gd;
 
 public class Mpcw.StackPage : Bin {
 

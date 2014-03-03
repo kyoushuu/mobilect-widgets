@@ -19,7 +19,6 @@
  */
 
 using Gtk;
-using Gd;
 
 public class Mpcw.View : StackPage {
 
@@ -58,16 +57,17 @@ public class Mpcw.View : StackPage {
 
     public TreeView treeview;
     public TreeViewColumn treeviewcolumn_selected;
+
     public Revealer revealer_selection;
     public HeaderBar toolbar_selection;
 
     public TreeModelFilter filter;
     public TreeModelSort sort;
 
-    private HeaderSimpleButton button_new;
-    private HeaderSimpleButton button_delete;
-    private HeaderToggleButton togglebutton_select;
-    private HeaderToggleButton togglebutton_cancel;
+    private Button button_new;
+    private Button button_delete;
+    private ToggleButton togglebutton_select;
+    private ToggleButton togglebutton_cancel;
     private Box box_select;
     private MenuButton menubutton_selection;
 
@@ -84,8 +84,6 @@ public class Mpcw.View : StackPage {
 
     construct {
         try {
-            Gd.ensure_types ();
-
             var builder = new Builder ();
             builder.add_from_resource ("/com/mobilectpower/widgets/view.ui");
             builder.connect_signals (this);
@@ -94,13 +92,14 @@ public class Mpcw.View : StackPage {
             add (box);
             treeview = builder.get_object ("treeview") as TreeView;
             treeviewcolumn_selected = builder.get_object ("treeviewcolumn_selected") as TreeViewColumn;
+
             revealer_selection = builder.get_object ("revealer_selection") as Revealer;
             toolbar_selection = builder.get_object ("toolbar_selection") as HeaderBar;
 
-            button_new = builder.get_object ("button_new") as HeaderSimpleButton;
-            button_delete = builder.get_object ("button_delete") as HeaderSimpleButton;
-            togglebutton_select = builder.get_object ("togglebutton_select") as HeaderToggleButton;
-            togglebutton_cancel = builder.get_object ("togglebutton_cancel") as HeaderToggleButton;
+            button_new = builder.get_object ("button_new") as Button;
+            button_delete = builder.get_object ("button_delete") as Button;
+            togglebutton_select = builder.get_object ("togglebutton_select") as ToggleButton;
+            togglebutton_cancel = builder.get_object ("togglebutton_cancel") as ToggleButton;
             box_select = builder.get_object ("box_select") as Box;
             menubutton_selection = builder.get_object ("menubutton_selection") as MenuButton;
 

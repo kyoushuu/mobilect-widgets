@@ -95,7 +95,7 @@ dnl ***************************************************************************
 dnl Check packages
 dnl ***************************************************************************
 
-GTK_REQUIRED=3.0.0
+GTK_REQUIRED=3.10.0
 
 PKG_CHECK_MODULES(GTK, gtk+-3.0 >= $GTK_REQUIRED
                        gdk-3.0 >= $GTK_REQUIRED)
