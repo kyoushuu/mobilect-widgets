@@ -11,6 +11,21 @@
       <class name="text-button"/>
     </style>
   </object>
+  <object class="GtkToggleButton" id="togglebutton_search">
+    <property name="visible">True</property>
+    <property name="halign">end</property>
+    <property name="valign">center</property>
+    <style>
+      <class name="image-button"/>
+    </style>
+    <child>
+      <object class="GtkImage" id="image_search">
+        <property name="visible">True</property>
+        <property name="icon-name">edit-find-symbolic</property>
+        <property name="icon-size">1</property>
+      </object>
+    </child>
+  </object>
   <object class="GtkBox" id="box_select">
     <property name="visible">True</property>
     <child>
@@ -114,6 +129,24 @@
     <property name="can_focus">False</property>
     <property name="orientation">vertical</property>
     <child>
+      <object class="GtkSearchBar" id="toolbar_search">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <child>
+          <object class="GtkSearchEntry" id="entry_search">
+            <property name="visible">True</property>
+            <property name="halign">center</property>
+            <property name="width-request">500</property>
+          </object>
+        </child>
+      </object>
+      <packing>
+        <property name="expand">False</property>
+        <property name="fill">False</property>
+        <property name="position">0</property>
+      </packing>
+    </child>
+    <child>
       <object class="GtkScrolledWindow" id="scrolledwindow">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
@@ -153,7 +186,7 @@
       <packing>
         <property name="expand">True</property>
         <property name="fill">True</property>
-        <property name="position">0</property>
+        <property name="position">1</property>
       </packing>
     </child>
     <child>
@@ -181,7 +214,7 @@
       <packing>
         <property name="expand">False</property>
         <property name="fill">False</property>
-        <property name="position">1</property>
+        <property name="position">2</property>
       </packing>
     </child>
   </object>

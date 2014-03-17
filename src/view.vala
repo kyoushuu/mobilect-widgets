@@ -58,6 +58,9 @@ public class Mpcw.View : StackPage {
     public TreeView treeview;
     public TreeViewColumn treeviewcolumn_selected;
 
+    public SearchBar toolbar_search;
+    public SearchEntry entry_search;
+
     public Revealer revealer_selection;
     public HeaderBar toolbar_selection;
 
@@ -66,6 +69,7 @@ public class Mpcw.View : StackPage {
 
     private Button button_new;
     private Button button_delete;
+    private ToggleButton togglebutton_search;
     private ToggleButton togglebutton_select;
     private ToggleButton togglebutton_cancel;
     private Box box_select;
@@ -90,14 +94,19 @@ public class Mpcw.View : StackPage {
 
             var box = builder.get_object ("box") as Box;
             add (box);
+
             treeview = builder.get_object ("treeview") as TreeView;
             treeviewcolumn_selected = builder.get_object ("treeviewcolumn_selected") as TreeViewColumn;
+
+            toolbar_search = builder.get_object ("toolbar_search") as SearchBar;
+            entry_search = builder.get_object ("entry_search") as SearchEntry;
 
             revealer_selection = builder.get_object ("revealer_selection") as Revealer;
             toolbar_selection = builder.get_object ("toolbar_selection") as HeaderBar;
 
             button_new = builder.get_object ("button_new") as Button;
             button_delete = builder.get_object ("button_delete") as Button;
+            togglebutton_search = builder.get_object ("togglebutton_search") as ToggleButton;
             togglebutton_select = builder.get_object ("togglebutton_select") as ToggleButton;
             togglebutton_cancel = builder.get_object ("togglebutton_cancel") as ToggleButton;
             box_select = builder.get_object ("box_select") as Box;
@@ -114,6 +123,10 @@ public class Mpcw.View : StackPage {
             /* Reveal selection toolbar when selection mode is enabled */
             bind_property ("selection-mode-enabled", revealer_selection, "reveal-child",
                            BindingFlags.SYNC_CREATE);
+
+            /* Reveal search toolbar when search button is active */
+            togglebutton_search.bind_property ("active", toolbar_search, "search-mode-enabled",
+                                               BindingFlags.SYNC_CREATE | BindingFlags.BIDIRECTIONAL);
 
             /* Update selection mode when select button is toggled */
             togglebutton_select.bind_property ("active", this, "selection-mode-enabled",
@@ -156,6 +169,7 @@ public class Mpcw.View : StackPage {
         base.added ();
         if (stack.headerbar != null) {
             stack.headerbar.pack_start (button_new);
+            stack.headerbar.pack_end (togglebutton_search);
             stack.headerbar.pack_end (box_select);
         }
     }
@@ -163,12 +177,14 @@ public class Mpcw.View : StackPage {
     public override void shown () {
         base.shown ();
         button_new.show ();
+        togglebutton_search.show ();
         box_select.show ();
     }
 
     public override void hidden () {
         base.hidden ();
         button_new.hide ();
+        togglebutton_search.hide ();
         box_select.hide ();
     }
 
