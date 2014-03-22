@@ -33,6 +33,8 @@ libmobilect_widgets_la_VALAFLAGS = \
 	--pkg=gtk+-3.0 \
 	--pkg=gd-1.0 \
 	--debug \
+	--target-glib=2.38 \
+	--gresources=$(builddir)/mobilect-widgets.gresource.xml \
 	--library mobilect-widgets-1.0 \
 	-H mobilect-widgets.h \
 	--vapi mobilect-widgets-1.0.vapi \
