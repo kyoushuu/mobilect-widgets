@@ -75,6 +75,7 @@ resources = \
 	date-entry-popup.ui \
 	window.ui \
 	view.ui \
+	view-buttons.ui \
 	$(NULL)
 
 resources.c: mobilect-widgets.gresource.xml $(resources)

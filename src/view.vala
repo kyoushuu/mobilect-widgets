@@ -20,6 +20,7 @@
 
 using Gtk;
 
+[GtkTemplate (ui = "/com/mobilectpower/widgets/view.ui")]
 public class Mpcw.View : StackPage {
 
     public enum ModelColumns {
@@ -55,20 +56,28 @@ public class Mpcw.View : StackPage {
         }
     }
 
+    [GtkChild]
     public TreeView treeview;
+    [GtkChild]
     public TreeViewColumn treeviewcolumn_selected;
 
+    [GtkChild]
     public SearchBar toolbar_search;
+    [GtkChild]
     public SearchEntry entry_search;
 
+    [GtkChild]
     public Revealer revealer_selection;
+    [GtkChild]
     public HeaderBar toolbar_selection;
+
+    [GtkChild]
+    private Button button_delete;
 
     public TreeModelFilter filter;
     public TreeModelSort sort;
 
     private Button button_new;
-    private Button button_delete;
     private ToggleButton togglebutton_search;
     private ToggleButton togglebutton_select;
     private ToggleButton togglebutton_cancel;
@@ -89,23 +98,10 @@ public class Mpcw.View : StackPage {
     construct {
         try {
             var builder = new Builder ();
-            builder.add_from_resource ("/com/mobilectpower/widgets/view.ui");
+            builder.add_from_resource ("/com/mobilectpower/widgets/view-buttons.ui");
             builder.connect_signals (this);
 
-            var box = builder.get_object ("box") as Box;
-            add (box);
-
-            treeview = builder.get_object ("treeview") as TreeView;
-            treeviewcolumn_selected = builder.get_object ("treeviewcolumn_selected") as TreeViewColumn;
-
-            toolbar_search = builder.get_object ("toolbar_search") as SearchBar;
-            entry_search = builder.get_object ("entry_search") as SearchEntry;
-
-            revealer_selection = builder.get_object ("revealer_selection") as Revealer;
-            toolbar_selection = builder.get_object ("toolbar_selection") as HeaderBar;
-
             button_new = builder.get_object ("button_new") as Button;
-            button_delete = builder.get_object ("button_delete") as Button;
             togglebutton_search = builder.get_object ("togglebutton_search") as ToggleButton;
             togglebutton_select = builder.get_object ("togglebutton_select") as ToggleButton;
             togglebutton_cancel = builder.get_object ("togglebutton_cancel") as ToggleButton;
@@ -243,26 +239,12 @@ public class Mpcw.View : StackPage {
         }
     }
 
-    [CCode (instance_pos = -1)]
-    public void on_button_new_clicked (Button button) {
-        new_activated ();
-    }
-
-    [CCode (instance_pos = -1)]
-    public void on_button_delete_clicked (Button button) {
+    [GtkCallback]
+    public void on_button_delete_clicked () {
         delete_activated ();
     }
 
-    [CCode (instance_pos = -1)]
-    public void on_togglebutton_select_toggled (ToggleButton button) {
-        if (togglebutton_select.active) {
-            stack.headerbar.get_style_context ().add_class ("selection-mode");
-        } else {
-            stack.headerbar.get_style_context ().remove_class ("selection-mode");
-        }
-    }
-
-    [CCode (instance_pos = -1)]
+    [GtkCallback]
     public void on_treeview_row_activated (TreeView tree_view,
                                            TreePath path,
                                            TreeViewColumn column) {
@@ -287,6 +269,20 @@ public class Mpcw.View : StackPage {
             } else {
                 item_activated (iter);
             }
+        }
+    }
+
+    [CCode (instance_pos = -1)]
+    public void on_button_new_clicked (Button button) {
+        new_activated ();
+    }
+
+    [CCode (instance_pos = -1)]
+    public void on_togglebutton_select_toggled (ToggleButton button) {
+        if (togglebutton_select.active) {
+            stack.headerbar.get_style_context ().add_class ("selection-mode");
+        } else {
+            stack.headerbar.get_style_context ().remove_class ("selection-mode");
         }
     }
 

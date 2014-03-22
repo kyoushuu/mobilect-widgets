@@ -20,7 +20,7 @@
 
 using Gtk;
 
-public class Mpcw.StackPage : Bin {
+public class Mpcw.StackPage : Box {
 
     public Stack stack { public get; internal set; }
 
