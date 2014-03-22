@@ -20,42 +20,28 @@
 
 using Gtk;
 
+[GtkTemplate (ui = "/com/mobilectpower/widgets/window.ui")]
 public class Mpcw.Window : ApplicationWindow {
 
+    [GtkChild]
     public HeaderBar headerbar;
+    [GtkChild]
     public Button button_back;
+    [GtkChild]
     public Stack stack;
 
     construct {
-        try {
-            var builder = new Builder ();
-            builder.add_from_resource ("/com/mobilectpower/widgets/window.ui");
-            builder.connect_signals (this);
-
-            var box = builder.get_object ("box") as Box;
-            add (box);
-
-            headerbar = builder.get_object ("headerbar") as HeaderBar;
-            button_back = builder.get_object ("button_back") as Button;
-
-            stack = builder.get_object ("stack") as Stack;
-            stack.headerbar = headerbar;
-
-            set_titlebar (headerbar);
-        } catch (Error e) {
-            error ("Failed to create widget: %s", e.message);
-        }
+        stack.headerbar = headerbar;
     }
 
-    [CCode (instance_pos = -1)]
-    public void on_stack_add_remove (Container container,
-                                     Widget widget) {
+    [GtkCallback]
+    public void on_stack_add_remove (Widget widget) {
         var children = stack.get_children ();
         button_back.visible = children.length () > 1;
     }
 
-    [CCode (instance_pos = -1)]
-    public void on_button_back_clicked (Button button) {
+    [GtkCallback]
+    public void on_button_back_clicked () {
         stack.pop ();
     }
 
