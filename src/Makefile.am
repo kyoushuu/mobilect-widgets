@@ -72,6 +72,7 @@ dist_pkgconfig_DATA = \
 
 resources = \
 	date-entry.ui \
+	date-entry-popup.ui \
 	window.ui \
 	view.ui \
 	$(NULL)

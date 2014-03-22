@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <!-- interface-requires gtk+ 3.10 -->
+  <template class="MpcwDateEntryPopup" parent="GtkWindow">
+    <property name="can_focus">True</property>
+    <property name="type">popup</property>
+    <signal name="show" handler="on_popup_show" swapped="no"/>
+    <child>
+      <object class="GtkCalendar" id="calendar">
+        <property name="visible">True</property>
+        <property name="can_focus">True</property>
+        <signal name="day-selected-double-click" handler="on_calendar_day_selected_double_click" swapped="no"/>
+        <signal name="day-selected" handler="on_calendar_day_selected" swapped="no"/>
+      </object>
+    </child>
+  </template>
+</interface>

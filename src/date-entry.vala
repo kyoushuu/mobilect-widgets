@@ -21,38 +21,24 @@
 using Gtk;
 
 
-public class Mpcw.DateEntry : Bin {
+[GtkTemplate (ui = "/com/mobilectpower/widgets/date-entry.ui")]
+public class Mpcw.DateEntry : Box {
 
-    public Entry entry { public get; private set; }
+    [GtkChild]
+    public Entry entry;
+    [GtkChild]
+    internal ToggleButton togglebutton;
 
     private Gtk.Window popup;
-    private ToggleButton togglebutton;
-    private Arrow arrow;
-    private Calendar calendar;
 
     construct {
-        try {
-            var builder = new Builder ();
-            builder.add_from_resource ("/com/mobilectpower/widgets/date-entry.ui");
-            builder.connect_signals (this);
+        popup = new DateEntryPopup (this);
 
-            var box = builder.get_object ("box") as Box;
-            add (box);
-
-            popup = builder.get_object ("popup") as Gtk.Window;
-            entry = builder.get_object ("entry") as Entry;
-            togglebutton = builder.get_object ("togglebutton") as ToggleButton;
-            arrow = builder.get_object ("arrow") as Arrow;
-            calendar = builder.get_object ("calendar") as Calendar;
-
-            togglebutton.bind_property ("active", popup, "visible", 
-                                        BindingFlags.BIDIRECTIONAL);
-        } catch (Error e) {
-            error ("Failed to create widget: %s", e.message);
-        }
+        togglebutton.bind_property ("active", popup, "visible", 
+                                    BindingFlags.BIDIRECTIONAL);
     }
 
-    private void set_date (Date date) {
+    internal void set_date (Date date) {
         char s[64];
 
         if (date.valid ()) {
@@ -61,22 +47,22 @@ public class Mpcw.DateEntry : Bin {
         }
     }
 
-    private Date get_date () {
+    internal Date get_date () {
         var date = Date ();
         date.set_parse (entry.text);
 
         return date;
     }
 
-    [CCode (instance_pos = -1)]
-    public void on_togglebutton_focus_out_event (Widget widget,
-                                                 Gdk.Event event) {
+    [GtkCallback]
+    public bool on_togglebutton_focus_out_event () {
         popup.visible = false;
+
+        return false;
     }
 
-    [CCode (instance_pos = -1)]
-    public void on_entry_focus_out_event (Widget widget,
-                                          Gdk.Event event) {
+    [GtkCallback]
+    public bool on_entry_focus_out_event () {
         var date = get_date ();
 
         if (date.valid ()) {
@@ -90,19 +76,38 @@ public class Mpcw.DateEntry : Bin {
 
             set_date (date);
         }
+
+        return false;
+    }
+}
+
+[GtkTemplate (ui = "/com/mobilectpower/widgets/date-entry-popup.ui")]
+public class Mpcw.DateEntryPopup : Gtk.Window {
+
+    [GtkChild]
+    private Calendar calendar;
+
+    private DateEntry entry;
+
+    public DateEntryPopup (DateEntry entry) {
+        this.entry = entry;
     }
 
-    [CCode (instance_pos = -1)]
-    public void on_popup_show (Window popup) {
+    construct {
+        type = Gtk.WindowType.POPUP;
+    }
+
+    [GtkCallback]
+    public void on_popup_show () {
         int x, y;
         Allocation button_alloc, popup_alloc;
 
-        var window = togglebutton.get_window ();
+        var window = entry.togglebutton.get_window ();
         var root_window = window.get_screen ().get_root_window ();
         window.get_origin (out x, out y);
 
-        togglebutton.get_allocation (out button_alloc);
-        popup.get_allocation (out popup_alloc);
+        entry.togglebutton.get_allocation (out button_alloc);
+        get_allocation (out popup_alloc);
 
         x += button_alloc.x;
         y += button_alloc.y;
@@ -116,9 +121,9 @@ public class Mpcw.DateEntry : Bin {
         } else {
             y -= popup_alloc.height;
         }
-        popup.move (x, y);
+        move (x, y);
 
-        var date = get_date ();
+        var date = entry.get_date ();
         if (date.valid ()) {
             calendar.year = date.get_year ();
             calendar.month = date.get_month () - 1;
@@ -126,18 +131,18 @@ public class Mpcw.DateEntry : Bin {
         }
     }
 
-    [CCode (instance_pos = -1)]
-    public void on_calendar_day_selected (Calendar widget) {
+    [GtkCallback]
+    public void on_calendar_day_selected () {
         var date = Date ();
         date.set_dmy ((DateDay) calendar.day,
                       (DateMonth) calendar.month + 1,
                       (DateYear) calendar.year);
-        set_date (date);
+        entry.set_date (date);
     }
 
-    [CCode (instance_pos = -1)]
-    public void on_calendar_day_selected_double_click (Calendar widget) {
-        popup.visible = false;
+    [GtkCallback]
+    public void on_calendar_day_selected_double_click () {
+        visible = false;
     }
 
 }
