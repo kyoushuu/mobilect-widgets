@@ -14,6 +14,7 @@
             <property name="visible">True</property>
             <property name="halign">center</property>
             <property name="width-request">500</property>
+            <signal name="search-changed" handler="on_entry_search_search_changed" swapped="no"/>
           </object>
         </child>
       </object>

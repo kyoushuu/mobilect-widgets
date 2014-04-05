@@ -95,6 +95,9 @@ public class Mpcw.View : StackPage {
     public virtual signal void item_activated (TreeIter iter) {
     }
 
+    public virtual signal void search_changed (string text) {
+    }
+
     construct {
         try {
             var builder = new Builder ();
@@ -237,6 +240,11 @@ public class Mpcw.View : StackPage {
             list.remove (iter);
             selected_items_num--;
         }
+    }
+
+    [GtkCallback]
+    public void on_entry_search_search_changed () {
+        search_changed (entry_search.text);
     }
 
     [GtkCallback]
