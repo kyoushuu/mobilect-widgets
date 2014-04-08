@@ -33,6 +33,8 @@ public class Mpcw.View : StackPage {
     public bool selection_mode_enabled { public get; public set; }
     public int selected_items_num { public get; private set; }
 
+    public bool search_mode_enabled { public get; public set; }
+
     private ListStore? _list;
     public ListStore? list {
         get {
@@ -123,8 +125,12 @@ public class Mpcw.View : StackPage {
             bind_property ("selection-mode-enabled", revealer_selection, "reveal-child",
                            BindingFlags.SYNC_CREATE);
 
+            /* Reveal selection toolbar when selection mode is enabled */
+            bind_property ("search-mode-enabled", toolbar_search, "search-mode-enabled",
+                           BindingFlags.SYNC_CREATE | BindingFlags.BIDIRECTIONAL);
+
             /* Reveal search toolbar when search button is active */
-            togglebutton_search.bind_property ("active", toolbar_search, "search-mode-enabled",
+            togglebutton_search.bind_property ("active", this, "search-mode-enabled",
                                                BindingFlags.SYNC_CREATE | BindingFlags.BIDIRECTIONAL);
 
             /* Update selection mode when select button is toggled */
