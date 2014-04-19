@@ -73,6 +73,7 @@ dist_pkgconfig_DATA = \
 resources = \
 	date-entry.ui \
 	date-entry-popup.ui \
+	stack.ui \
 	window.ui \
 	view.ui \
 	view-buttons.ui \
