@@ -93,12 +93,15 @@ public class Mpcw.Stack : Gtk.Stack {
 
     public void pop () {
         var children = get_children ();
-        if (children.length () > 1) {
-            var new_page = children.last ().prev.data as StackPage;
+        if (children.length () >= 1) {
+            var new_page = children.length () > 1 ?
+                children.last ().prev.data as StackPage : null;
             var old_page = children.last ().data as StackPage;
             old_page.closed.connect ((page) => {
                 headerbar.set_custom_title (null);
-                set_visible_child (new_page);
+                if (new_page != null) {
+                    set_visible_child (new_page);
+                }
             });
             old_page.close ();
         }
