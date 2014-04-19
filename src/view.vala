@@ -125,7 +125,7 @@ public class Mpcw.View : StackPage {
             bind_property ("selection-mode-enabled", revealer_selection, "reveal-child",
                            BindingFlags.SYNC_CREATE);
 
-            /* Reveal selection toolbar when selection mode is enabled */
+            /* Enable search mode on search toolbar when search mode is enabled */
             bind_property ("search-mode-enabled", toolbar_search, "search-mode-enabled",
                            BindingFlags.SYNC_CREATE | BindingFlags.BIDIRECTIONAL);
 
