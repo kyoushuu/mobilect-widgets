@@ -27,15 +27,15 @@ public class Mpcw.Stack : Gtk.Stack {
     private weak StackPage current_page;
 
     construct {
-      notify["visible-child"].connect (() => {
-          if (current_page != null) {
-              current_page.hidden ();
-          }
-          if (visible_child != null) {
-              current_page = visible_child as StackPage;
-              current_page.shown ();
-          }
-      });
+        notify["visible-child"].connect (() => {
+            if (current_page != null) {
+                current_page.hidden ();
+            }
+            if (visible_child != null) {
+                current_page = visible_child as StackPage;
+                current_page.shown ();
+            }
+        });
     }
 
     public Stack (HeaderBar headerbar) {
