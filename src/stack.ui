@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <!-- interface-requires gtk+ 3.10 -->
+  <object class="GtkButton" id="button_back">
+    <property name="halign">start</property>
+    <property name="valign">center</property>
+    <signal name="clicked" handler="mpcw_stack_on_button_back_clicked" swapped="no"/>
+    <style>
+      <class name="image-button"/>
+    </style>
+    <child>
+      <object class="GtkImage" id="image_back">
+        <property name="visible">True</property>
+        <property name="icon-name">go-previous-symbolic</property>
+        <property name="icon-size">1</property>
+      </object>
+    </child>
+  </object>
+</interface>

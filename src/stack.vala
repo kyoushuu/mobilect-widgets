@@ -22,11 +22,32 @@ using Gtk;
 
 public class Mpcw.Stack : Gtk.Stack {
 
-    public HeaderBar headerbar { public get; internal set; }
+    private HeaderBar _headerbar;
+    public HeaderBar headerbar {
+        public get {
+            return _headerbar;
+        }
+        internal set {
+            _headerbar = value;
+            _headerbar.pack_start (button_back);
+        }
+    }
+
+    private Button button_back;
 
     private weak StackPage current_page;
 
     construct {
+        try {
+            var builder = new Builder ();
+            builder.add_from_resource ("/com/mobilectpower/widgets/stack.ui");
+            builder.connect_signals (this);
+
+            button_back = builder.get_object ("button_back") as Button;
+        } catch (Error e) {
+            error ("Failed to create widget: %s", e.message);
+        }
+
         notify["visible-child"].connect (() => {
             if (current_page != null) {
                 current_page.hidden ();
@@ -52,6 +73,7 @@ public class Mpcw.Stack : Gtk.Stack {
         } else {
             add (page);
         }
+        update_back_button ();
 
         page.added ();
         set_visible_child (page);
@@ -68,6 +90,21 @@ public class Mpcw.Stack : Gtk.Stack {
             });
             old_page.close ();
         }
+    }
+
+    public override void remove (Widget widget) {
+        base.remove (widget);
+        update_back_button ();
+    }
+
+    private void update_back_button () {
+        var children = get_children ();
+        button_back.visible = children.length () > 1;
+    }
+
+    [CCode (instance_pos = -1)]
+    public void on_button_back_clicked (Button button) {
+        pop ();
     }
 
 }
