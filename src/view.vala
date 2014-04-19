@@ -19,6 +19,7 @@
  */
 
 using Gtk;
+using Gdk;
 
 [GtkTemplate (ui = "/com/mobilectpower/widgets/view.ui")]
 public class Mpcw.View : StackPage {
@@ -258,6 +259,26 @@ public class Mpcw.View : StackPage {
     [GtkCallback]
     public void on_button_delete_clicked () {
         delete_activated ();
+    }
+
+    [GtkCallback]
+    public bool on_treeview_button_press_event (Widget widget,
+                                                EventButton event) {
+        TreePath path;
+        TreeViewColumn column;
+
+        if (event.button != BUTTON_SECONDARY) {
+            return false;
+        }
+
+        treeview.get_path_at_pos ((int) event.x, (int) event.y,
+                                  out path, out column, null, null);
+
+        selection_mode_enabled = true;
+
+        on_treeview_row_activated (treeview, path, column);
+
+        return true;
     }
 
     [GtkCallback]
