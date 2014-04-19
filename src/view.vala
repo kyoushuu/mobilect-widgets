@@ -157,8 +157,10 @@ public class Mpcw.View : StackPage {
                 if (!selection_mode_enabled) {
                     select_none ();
                     stack.headerbar.set_custom_title (null);
+                    stack.headerbar.show_close_button = true;
                 } else {
                     stack.headerbar.set_custom_title (menubutton_selection);
+                    stack.headerbar.show_close_button = false;
                 }
             });
 
