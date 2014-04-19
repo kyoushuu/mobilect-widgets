@@ -38,6 +38,10 @@ public class Mpcw.Stack : Gtk.Stack {
       });
     }
 
+    public Stack (HeaderBar headerbar) {
+        this.headerbar = headerbar;
+    }
+
     public void push (StackPage page) {
         page.stack = this;
         add (page);
