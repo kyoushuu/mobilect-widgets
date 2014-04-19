@@ -30,6 +30,18 @@ public class Mpcw.Stack : Gtk.Stack {
         internal set {
             _headerbar = value;
             _headerbar.pack_start (button_back);
+            update_back_button ();
+        }
+    }
+
+    private bool _show_back_button = true;
+    public bool show_back_button {
+        public get {
+            return _show_back_button;
+        }
+        internal set {
+            _show_back_button = value;
+            update_back_button ();
         }
     }
 
@@ -99,7 +111,7 @@ public class Mpcw.Stack : Gtk.Stack {
 
     private void update_back_button () {
         var children = get_children ();
-        button_back.visible = children.length () > 1;
+        button_back.visible = show_back_button && children.length () > 1;
     }
 
     [CCode (instance_pos = -1)]
