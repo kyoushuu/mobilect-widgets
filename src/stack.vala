@@ -42,9 +42,17 @@ public class Mpcw.Stack : Gtk.Stack {
         this.headerbar = headerbar;
     }
 
-    public void push (StackPage page) {
+    public void push (StackPage page, string? name = null, string? title = null) {
         page.stack = this;
-        add (page);
+
+        if (name != null && title != null) {
+            add_titled (page, name, title);
+        } else if (name != null) {
+            add_named (page, name);
+        } else {
+            add (page);
+        }
+
         page.added ();
         set_visible_child (page);
     }
