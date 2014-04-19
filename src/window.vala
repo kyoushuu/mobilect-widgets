@@ -26,23 +26,10 @@ public class Mpcw.Window : ApplicationWindow {
     [GtkChild]
     public HeaderBar headerbar;
     [GtkChild]
-    public Button button_back;
-    [GtkChild]
     public Stack stack;
 
     construct {
         stack.headerbar = headerbar;
-    }
-
-    [GtkCallback]
-    public void on_stack_add_remove (Widget widget) {
-        var children = stack.get_children ();
-        button_back.visible = children.length () > 1;
-    }
-
-    [GtkCallback]
-    public void on_button_back_clicked () {
-        stack.pop ();
     }
 
 }
