@@ -165,6 +165,12 @@ public class Mpcw.View : StackPage {
                 }
             });
 
+            notify["search-mode-enabled"].connect (() => {
+                if (search_mode_enabled) {
+                    entry_search.text = "";
+                }
+            });
+
             /* Show select column if select is active */
             bind_property ("selection-mode-enabled", treeviewcolumn_selected, "visible",
                            BindingFlags.SYNC_CREATE);
