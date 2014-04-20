@@ -190,6 +190,10 @@ public class Mpcw.View : StackPage {
     }
 
     public override void hidden () {
+        if (selection_mode_enabled) {
+            selection_mode_enabled = false;
+        }
+
         base.hidden ();
         button_new.hide ();
         togglebutton_search.hide ();
