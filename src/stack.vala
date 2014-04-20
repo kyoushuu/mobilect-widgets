@@ -98,7 +98,7 @@ public class Mpcw.Stack : Gtk.Stack {
                 children.last ().prev.data as StackPage : null;
             var old_page = children.last ().data as StackPage;
             old_page.closed.connect ((page) => {
-                headerbar.set_custom_title (null);
+                headerbar.custom_title = null;
                 if (new_page != null) {
                     set_visible_child (new_page);
                 }
