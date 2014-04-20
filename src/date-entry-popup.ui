@@ -9,8 +9,11 @@
       <object class="GtkCalendar" id="calendar">
         <property name="visible">True</property>
         <property name="can_focus">True</property>
-        <signal name="day-selected-double-click" handler="on_calendar_day_selected_double_click" swapped="no"/>
         <signal name="day-selected" handler="on_calendar_day_selected" swapped="no"/>
+        <signal name="next-month" handler="on_calendar_month_changed" swapped="no"/>
+        <signal name="prev-month" handler="on_calendar_month_changed" swapped="no"/>
+        <signal name="next-year" handler="on_calendar_month_changed" swapped="no"/>
+        <signal name="prev-year" handler="on_calendar_month_changed" swapped="no"/>
       </object>
     </child>
   </template>

@@ -31,13 +31,6 @@ public class Mpcw.DateEntry : Box {
 
     private Gtk.Window popup;
 
-    construct {
-        popup = new DateEntryPopup (this);
-
-        togglebutton.bind_property ("active", popup, "visible", 
-                                    BindingFlags.BIDIRECTIONAL);
-    }
-
     internal void set_date (Date date) {
         char s[64];
 
@@ -56,9 +49,20 @@ public class Mpcw.DateEntry : Box {
 
     [GtkCallback]
     public bool on_togglebutton_focus_out_event () {
-        popup.visible = false;
+        togglebutton.active = false;
 
         return false;
+    }
+
+    [GtkCallback]
+    public void on_togglebutton_toggled () {
+        if (togglebutton.active) {
+            popup = new DateEntryPopup (this);
+            popup.show ();
+        } else if (popup != null) {
+            popup.destroy ();
+            popup = null;
+        }
     }
 
     [GtkCallback]
@@ -88,6 +92,8 @@ public class Mpcw.DateEntryPopup : Gtk.Window {
     private Calendar calendar;
 
     private DateEntry entry;
+
+    private bool month_changed = true;
 
     public DateEntryPopup (DateEntry entry) {
         this.entry = entry;
@@ -125,8 +131,11 @@ public class Mpcw.DateEntryPopup : Gtk.Window {
 
         var date = entry.get_date ();
         if (date.valid ()) {
+            month_changed = true;
             calendar.year = date.get_year ();
+            month_changed = true;
             calendar.month = date.get_month () - 1;
+            month_changed = true;
             calendar.day = date.get_day ();
         }
     }
@@ -138,11 +147,17 @@ public class Mpcw.DateEntryPopup : Gtk.Window {
                       (DateMonth) calendar.month + 1,
                       (DateYear) calendar.year);
         entry.set_date (date);
+
+        if (!month_changed) {
+            entry.entry.grab_focus ();
+        } else {
+            month_changed = false;
+        }
     }
 
     [GtkCallback]
-    public void on_calendar_day_selected_double_click () {
-        visible = false;
+    public void on_calendar_month_changed () {
+        month_changed = true;
     }
 
 }
